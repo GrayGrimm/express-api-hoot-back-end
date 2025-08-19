@@ -32,6 +32,7 @@ const hootSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+
 const Hoot = mongoose.model('Hoot', hootSchema);
 
 module.exports = Hoot;
