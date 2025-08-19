@@ -3,7 +3,7 @@ const verifyToken = require('../middleware/verify-token.js');
 const Hoot = require('../models/hoot.js');
 const router = express.Router();
 
-// POST -/hoots
+// POST - /hoots
 router.post('/', verifyToken, async (req, res) => {
     try {
         req.body.author = req.user._id
@@ -23,6 +23,16 @@ router.get('/', verifyToken, async (req, res) => {
     } catch (err) {
         res.status(500).json({ err: err.message });
     }
-})
+});
+
+//GET - /hoots/:hootId
+router.get('/:hootId', verifyToken, async (req, res) => {
+  try {
+    const hoot = await Hoot.findById(req.params.hootId).populate('author');
+    res.status(200).json(hoot);
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+});
 
 module.exports = router;
